@@ -17,7 +17,7 @@ reference_data = reference_data.add_row_number()
 # Create your views here.
 def search(request):
 
-    if request.method == "GET":
+    if request.method == "POST":
         try:
             payload = json.loads(request.body)
             image_url = payload['url']
@@ -41,7 +41,8 @@ def search(request):
         try:
                 # calling image-search function
                 return image_search(top_K)
-        except:
+        except Exception as e:
+            print(e)
             # Sending response
             response = json.dumps([{"Status":"Failed","Cause":"Image Search Faied"}])
             return HttpResponse(response,content_type='text/json')    
